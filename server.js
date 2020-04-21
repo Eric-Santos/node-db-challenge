@@ -10,6 +10,6 @@ server.get("/", (req, res) => {
   res.send("hello world!");
 });
 
-server.use("/api/server", ProjectsRouter);
+server.use("/server", ProjectsRouter);
 
 module.exports = server;

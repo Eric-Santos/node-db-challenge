@@ -14,4 +14,110 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Project.findById(id)
+    .then((project) => {
+      if (project) {
+        res.json(project);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find scheme with given id." });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get schemes", err });
+    });
+});
+
+router.get("/:id/tasks", (req, res) => {
+  const { id } = req.params;
+
+  Project.findSteps(id)
+    .then((task) => {
+      if (task.length) {
+        res.json(task);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find tasks for given project" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get tasks", err });
+    });
+});
+
+router.post("/", (req, res) => {
+  const projectData = req.body;
+
+  Project.add(projectData)
+    .then((project) => {
+      res.status(201).json(project);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to create new project", err });
+    });
+});
+
+// router.post("/:id/tasks", (req, res) => {
+//   const projectData = req.body;
+//   const { id } = req.params;
+
+//   Schemes.addtask(id)
+//     .then((project) => {
+//       if (project) {
+//         Project.addtask(taskData, id).then((task) => {
+//           res.status(201).json(task);
+//         });
+//       } else {
+//         res.status(404).json({ message: "Could not find project with given id." });
+//       }
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ message: "Failed to create new task", err });
+//     });
+// });
+
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  Project.findById(id)
+    .then((project) => {
+      if (project) {
+        Project.update(id, changes).then((updatedProject) => {
+          res.json(updatedProject);
+        });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find project with given id" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to update project", err });
+    });
+});
+
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Project.remove(id)
+    .then((deleted) => {
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find project with given id" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to delete project", err });
+    });
+});
+
 module.exports = router;
