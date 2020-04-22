@@ -16,19 +16,19 @@ The Minimum Viable Product must be completed in three hours.
 
 Follow these steps to set up and work on your project:
 
-- [ ] Create a forked copy of this project.
-- [ ] Add your _Team Lead_ as collaborator on Github.
-- [ ] Clone your forked version of the Repository.
-- [ ] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
-- [ ] Implement the project on this Branch, committing changes regularly.
-- [ ] Push commits: git push origin `firstName-lastName`.
+- [x] Create a forked copy of this project.
+- [x] Add your _Team Lead_ as collaborator on Github.
+- [x] Clone your forked version of the Repository.
+- [x] Create a new Branch on the clone: git checkout -b `firstName-lastName`.
+- [x] Implement the project on this Branch, committing changes regularly.
+- [x] Push commits: git push origin `firstName-lastName`.
 
 Follow these steps for completing your project.
 
-- [ ] Submit a Pull-Request to merge `firstName-lastName` Branch into master on **your fork, don't make Pull Requests against Lambda's repository**.
-- [ ] Please don't merge your own pull request.
-- [ ] Add your _Team Lead_ as a Reviewer on the Pull-request
-- [ ] Your _Team Lead_ will count the challenge as done by merging the branch into _master_.
+- [x] Submit a Pull-Request to merge `firstName-lastName` Branch into master on **your fork, don't make Pull Requests against Lambda's repository**.
+- [x] Please don't merge your own pull request.
+- [x] Add your _Team Lead_ as a Reviewer on the Pull-request
+- [x] Your _Team Lead_ will count the challenge as done by merging the branch into _master_.
 
 ## Commits
 
@@ -65,8 +65,8 @@ Complete the following tasks:
 - [ ] Build an API with endpoints for:
   - [ ] adding resources.
   - [ ] retrieving a list of resources.
-  - [ ] adding projects.
-  - [ ] retrieving a list of projects.
+  - [x] adding projects.
+  - [x] retrieving a list of projects.
   - [ ] adding tasks.
   - [ ] retrieving a list of tasks. **The list of tasks should include the project name and project description**.
 
