@@ -2,13 +2,13 @@ exports.up = function (knex) {
   return knex.schema
     .createTable("projects", (tbl) => {
       tbl.increments();
-      tbl.boolean("completed").defaultTo(false);
+      tbl.boolean("completed").defaultTo(false).notNullable();
       tbl.text("project_name", 128).unique().notNullable();
       tbl.text("description");
     })
     .createTable("task", (tbl) => {
       tbl.increments();
-      tbl.boolean("completed").defaultTo(false);
+      tbl.boolean("completed").defaultTo(false).notNullable();
       tbl.text("description").notNullable().unique();
       tbl.text("notes");
       tbl

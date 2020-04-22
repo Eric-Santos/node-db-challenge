@@ -48,16 +48,22 @@ function remove(id) {
 }
 
 //task models
-function findTasks(id) {
-  return db("projects")
-    .join("task", "task.project_id", "projects.id")
-    .select(
-      "task.id as id",
-      "projects.project_name",
-      "projects.description",
-      "tasks.task_description",
-      "task.task_notes",
-      "task.completed"
-    )
-    .where({ project_id: id });
+async function findTasks(id) {
+  try {
+    const projectTasks = await db("projects")
+      .join("task", "task.project_id", "projects.id")
+      .select(
+        "task.id as id",
+        "projects.project_name",
+        "projects.description",
+        "task.description",
+        "task.notes",
+        "task.completed"
+      )
+      .where({ project_id: id });
+    return projectTasks;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 }

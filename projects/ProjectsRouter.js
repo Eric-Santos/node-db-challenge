@@ -5,7 +5,7 @@ const Project = require("./project-model.js");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  Project.find()
+  Project.findAllProjects()
     .then((project) => {
       res.json(project);
     })
