@@ -44,25 +44,6 @@ router.post("/", (req, res) => {
     });
 });
 
-// router.post("/:id/tasks", (req, res) => {
-//   const projectData = req.body;
-//   const { id } = req.params;
-
-//   Schemes.addtask(id)
-//     .then((project) => {
-//       if (project) {
-//         Project.addtask(taskData, id).then((task) => {
-//           res.status(201).json(task);
-//         });
-//       } else {
-//         res.status(404).json({ message: "Could not find project with given id." });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: "Failed to create new task", err });
-//     });
-// });
-
 router.put("/:id", (req, res) => {
   const { id } = req.params;
   const changes = req.body;
@@ -102,6 +83,15 @@ router.delete("/:id", (req, res) => {
     });
 });
 //task routes
+router.get("/allTasks", (req, res) => {
+  Project.findAllTasks()
+    .then((task) => {
+      res.json(task);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get project", err });
+    });
+});
 
 router.get("/:id/tasks", (req, res) => {
   const { id } = req.params;
@@ -124,14 +114,15 @@ router.get("/:id/tasks", (req, res) => {
 router.post("/", (req, res) => {
   const taskData = req.body;
 
-  Project.addtask(taskData)
+  Project.addTask(taskData)
     .then((task) => {
       res.status(201).json(task);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to create new task", err });
+      res.status(500).json({ message: "Failed to create new resource", err });
     });
 });
+
 //resources routes
 
 router.post("/", (req, res) => {

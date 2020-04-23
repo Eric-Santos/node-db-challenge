@@ -16,9 +16,7 @@ module.exports = {
 function findAllProjects() {
   return db("projects");
 }
-function findAllTasks() {
-  return db("task");
-}
+
 function findAllResources() {
   return db("resource");
 }
@@ -48,6 +46,10 @@ function remove(id) {
 }
 
 //task models
+function findAllTasks() {
+  return db("task");
+}
+
 async function findTasks(id) {
   try {
     const projectTasks = await db("projects")
@@ -62,6 +64,31 @@ async function findTasks(id) {
       )
       .where({ project_id: id });
     return projectTasks;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+//resource models
+function findAllResources() {
+  return db("resource");
+}
+
+async function findResources(id) {
+  try {
+    const projectResources = await db("projects")
+      .join("resource", "resource.project_id", "projects.id")
+      .select(
+        "resource.id as id",
+        "projects.project_name",
+        "projects.description",
+        "resource.description",
+        "resource.notes",
+        "resource.completed"
+      )
+      .where({ project_id: id });
+    return projectResources;
   } catch (error) {
     console.log(error);
     return error;
