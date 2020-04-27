@@ -94,5 +94,5 @@ async function findResourcesById(id) {
 }
 
 function addResource(resourceData) {
-  return db("project_resources").insert(resourceData);
+  return db("resources").insert(resourceData);
 }
