@@ -2,15 +2,16 @@ const db = require("../data/db-config.js");
 
 module.exports = {
   findAllProjects,
-  findAllTasks,
-  findAllTasks,
-  findTasks,
-  findById,
   addProject,
-  addTask,
-  addResource,
+  findById,
   update,
   remove,
+  findAllTasks,
+  findTasks,
+  addTask,
+  findAllResources,
+  findResourcesById,
+  addResource,
 };
 
 function findAllProjects() {
@@ -27,14 +28,6 @@ function findById(id) {
 
 function addProject(projectData) {
   return db("projects").insert(projectData);
-}
-//task
-function addTask(taskData) {
-  return db("task").insert(taskData);
-}
-//resource
-function addResource(resourceData) {
-  return db("resource").insert(resourceData);
 }
 
 function update(id, changes) {
@@ -70,12 +63,17 @@ async function findTasks(id) {
   }
 }
 
+function addTask(taskData) {
+  return db("task").insert(taskData);
+}
+
 //resource models
+
 function findAllResources() {
   return db("resource");
 }
 
-async function findResources(id) {
+async function findResourcesById(id) {
   try {
     const projectResources = await db("projects")
       .join("resource", "resource.project_id", "projects.id")
@@ -93,4 +91,8 @@ async function findResources(id) {
     console.log(error);
     return error;
   }
+}
+
+function addResource(resourceData) {
+  return db("project_resources").insert(resourceData);
 }

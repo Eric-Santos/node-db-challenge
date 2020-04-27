@@ -14,23 +14,23 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
+// router.get("/:id", (req, res) => {
+//   const { id } = req.params;
 
-  Project.findById(id)
-    .then((project) => {
-      if (project) {
-        res.json(project);
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find scheme with given id." });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to get schemes", err });
-    });
-});
+//   Project.findById(id)
+//     .then((project) => {
+//       if (project) {
+//         res.json(project);
+//       } else {
+//         res
+//           .status(404)
+//           .json({ message: "Could not find project with given id." });
+//       }
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ message: "Failed to get projects", err });
+//     });
+// });
 
 router.post("/", (req, res) => {
   const projectData = req.body;
@@ -89,7 +89,7 @@ router.get("/allTasks", (req, res) => {
       res.json(task);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to get project", err });
+      res.status(500).json({ message: "Failed to get task", err });
     });
 });
 
@@ -111,7 +111,7 @@ router.get("/:id/tasks", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/addTask", (req, res) => {
   const taskData = req.body;
 
   Project.addTask(taskData)
@@ -124,8 +124,35 @@ router.post("/", (req, res) => {
 });
 
 //resources routes
+router.get("/allResources", (req, res) => {
+  Project.findAllResources()
+    .then((resource) => {
+      res.json(resource);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get all resources", err });
+    });
+});
 
-router.post("/", (req, res) => {
+router.get("/:id/resources", (req, res) => {
+  const { id } = req.params;
+
+  Project.findResourcesById(id)
+    .then((resource) => {
+      if (resource.length) {
+        res.json(resource);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find resources for given project" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get resources", err });
+    });
+});
+
+router.post("/addResource", (req, res) => {
   const resourceData = req.body;
 
   Project.addResource(resourceData)
