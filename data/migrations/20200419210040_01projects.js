@@ -25,7 +25,7 @@ exports.up = function (knex) {
       tbl.text("resource_name", 128).unique().notNullable();
       tbl.text("description");
       tbl
-        .integer("resource_id")
+        .integer("project_id")
         .unsigned()
         .notNullable()
         .references("id")

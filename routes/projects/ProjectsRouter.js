@@ -5,9 +5,27 @@ const Project = require("./project-model");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  Project.findAllProjects()
+  Project.find()
     .then((project) => {
       res.json(project);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get project", err });
+    });
+});
+
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Project.findById(id)
+    .then((project) => {
+      if (project) {
+        res.json(project);
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find project with given id." });
+      }
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to get project", err });
@@ -17,7 +35,7 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const projectData = req.body;
 
-  Project.addProject(projectData)
+  Project.add(projectData)
     .then((project) => {
       res.status(201).json(project);
     })

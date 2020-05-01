@@ -1,27 +1,22 @@
 const db = require("../../data/db-config");
 
 module.exports = {
-  findAllProjects,
-  addProject,
+  find,
+  add,
   findById,
   update,
   remove,
-  findAllResources,
 };
 
-function findAllProjects() {
+function find() {
   return db("projects");
-}
-
-function findAllResources() {
-  return db("resource");
 }
 
 function findById(id) {
   return db("projects").where({ id }).first();
 }
 
-function addProject(projectData) {
+function add(projectData) {
   return db("projects").insert(projectData);
 }
 

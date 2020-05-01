@@ -1,13 +1,11 @@
 const express = require("express");
 
-const Project = require("../projects/project-model");
+const Task = require("./tasks-model");
 
 const router = express.Router();
 
-router.get("/:coconuts", (req, res) => {
-  const { coconuts } = req.params;
-  console.log(coconuts);
-  Project.findAllTasks()
+router.get("/", (req, res) => {
+  Task.find()
     .then((task) => {
       res.json(task);
     })
@@ -16,28 +14,26 @@ router.get("/:coconuts", (req, res) => {
     });
 });
 
-// router.get("/:id/tasks", (req, res) => {
-//   const { id } = req.params;
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
 
-//   Project.findTasks(id)
-//     .then((tasks) => {
-//       if (tasks.length) {
-//         res.json(tasks);
-//       } else {
-//         res
-//           .status(404)
-//           .json({ message: "Could not find tasks for given project" });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: "Failed to get tasks", err });
-//     });
-// });
+  Task.findById(id)
+    .then((task) => {
+      if (task) {
+        res.json(task);
+      } else {
+        res.status(404).json({ message: "Could not find task with given id." });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get task", err });
+    });
+});
 
 router.post("/addTask", (req, res) => {
   const taskData = req.body;
 
-  Project.addTask(taskData)
+  Project.add(taskData)
     .then((task) => {
       res.status(201).json(task);
     })

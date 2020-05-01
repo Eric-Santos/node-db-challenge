@@ -1,32 +1,31 @@
 const db = require("../../data/db-config");
 
 module.exports = {
-  findAllResources,
-  findResourcesById,
-  addResource,
+  find,
+  findById,
+  add,
   update,
   remove,
 };
 
 //resource models
 
-function findAllResources() {
+function find() {
   return db("resource");
 }
 
-async function findResourcesById(id) {
+async function findById(id) {
   try {
     const projectResources = await db("projects")
       .join("resource", "resource.project_id", "projects.id")
       .select(
-        "resource.id as id",
+        "resource.id",
         "projects.project_name",
+        "resource.project_id as pid",
         "projects.description",
-        "resource.description",
-        "resource.notes",
-        "resource.completed"
+        "resource.description"
       )
-      .where({ project_id: id });
+      .where({ "resource.id": id });
     return projectResources;
   } catch (error) {
     console.log(error);
@@ -34,13 +33,13 @@ async function findResourcesById(id) {
   }
 }
 
-function addResource(resourceData) {
+function add(resourceData) {
   return db("resources").insert(resourceData);
 }
 function update(id, changes) {
-  return db("projects").where({ id }).update(changes);
+  return db("resource").where({ id }).update(changes);
 }
 
 function remove(id) {
-  return db("projects").where({ id }).del();
+  return db("resource").where({ id }).del();
 }

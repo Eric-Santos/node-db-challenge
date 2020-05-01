@@ -3,7 +3,7 @@ exports.seed = function (knex) {
   return knex("resource").then(function () {
     // Inserts seed entries
     return knex("resource").insert([
-      { resource_name: "computer", resource_id: 1 },
+      { resource_name: "computer", project_id: 1 },
     ]);
   });
 };
